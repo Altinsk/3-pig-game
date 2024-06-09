@@ -14,9 +14,9 @@ const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 const dice = document.querySelector('.dice');
 
+const scores = [0, 0];
 let currentscore = 0;
 let activePlayer = 0;
-let score = 0;
 
 // Initialize the game
 player1Score.textContent = 0;
@@ -64,11 +64,12 @@ btnRoll.addEventListener('click', function () {
 });
 
 btnHold.addEventListener('click', function () {
-  score = Number(document.getElementById(`score--${activePlayer}`).textContent);
+  scores[activePlayer] += currentscore;
   document.getElementById(`score--${activePlayer}`).textContent =
-    currentscore + score;
+    scores[activePlayer];
+
   if (
-    Number(document.getElementById(`score--${activePlayer}`).textContent) > 20
+    Number(document.getElementById(`score--${activePlayer}`).textContent) >= 20
   ) {
     document
       .querySelector(`.player--${activePlayer}`)
