@@ -16,14 +16,13 @@ const dice = document.querySelector('.dice');
 
 let currentscore1 = 0;
 let currentscore2 = 0;
+let activePlayer = true;
+
 // Initialize the game
 player1Score.textContent = 0;
 player2Score.textContent = 0;
 player1CurrentScore.textContent = 0;
 player2CurrentScore.textContent = 0;
-dice.classList.add('hidden');
-currentscore1 = 0;
-currentscore2 = 0;
 dice.classList.add('hidden');
 
 // Initialize the game by New game button
@@ -34,7 +33,10 @@ btnNew.addEventListener('click', function () {
   player2CurrentScore.textContent = '0';
   currentscore1 = 0;
   currentscore2 = 0;
+  activePlayer = true;
   dice.classList.add('hidden');
+  player1.classList.add('player--active');
+  player2.classList.remove('player--active');
 });
 
 // Roll dice random number
@@ -48,10 +50,10 @@ btnRoll.addEventListener('click', function () {
   dice.src = `./images/dice-${rollDice}.png`;
 
   // Adding dice number to the current score if not 1
-  if (rollDice !== 1 && player1.classList.contains('player--active')) {
+  if (rollDice !== 1 && activePlayer) {
     currentscore1 += rollDice;
     player1CurrentScore.textContent = currentscore1;
-  } else if (rollDice !== 1 && player2.classList.contains('player--active')) {
+  } else if (rollDice !== 1 && !activePlayer) {
     currentscore2 += rollDice;
     player2CurrentScore.textContent = currentscore2;
   }
@@ -61,9 +63,11 @@ btnRoll.addEventListener('click', function () {
     player1.classList.remove('player--active');
     player2.classList.add('player--active');
     player1Score.textContent = currentscore1;
+    activePlayer = false;
   } else if (player2.classList.contains('player--active') && rollDice === 1) {
     player1.classList.add('player--active');
     player2.classList.remove('player--active');
     player2Score.textContent = currentscore2;
+    activePlayer = true;
   }
 });
