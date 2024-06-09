@@ -70,7 +70,7 @@ btnHold.addEventListener('click', function () {
       scores[activePlayer];
     if (
       Number(document.getElementById(`score--${activePlayer}`).textContent) >=
-      20
+      100
     ) {
       document
         .querySelector(`.player--${activePlayer}`)
