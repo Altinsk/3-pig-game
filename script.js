@@ -14,9 +14,8 @@ const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 const dice = document.querySelector('.dice');
 
-let currentscore1 = 0;
-let currentscore2 = 0;
-let activePlayer = true;
+let currentscore = 0;
+let activePlayer = 0;
 
 // Initialize the game
 player1Score.textContent = 0;
@@ -31,9 +30,8 @@ btnNew.addEventListener('click', function () {
   player2Score.textContent = '0';
   player1CurrentScore.textContent = '0';
   player2CurrentScore.textContent = '0';
-  currentscore1 = 0;
-  currentscore2 = 0;
-  activePlayer = true;
+  currentscore = 0;
+  activePlayer = 0;
   dice.classList.add('hidden');
   player1.classList.add('player--active');
   player2.classList.remove('player--active');
@@ -50,24 +48,36 @@ btnRoll.addEventListener('click', function () {
   dice.src = `./images/dice-${rollDice}.png`;
 
   // Adding dice number to the current score if not 1
-  if (rollDice !== 1 && activePlayer) {
-    currentscore1 += rollDice;
-    player1CurrentScore.textContent = currentscore1;
-  } else if (rollDice !== 1 && !activePlayer) {
-    currentscore2 += rollDice;
-    player2CurrentScore.textContent = currentscore2;
+  if (rollDice !== 1) {
+    currentscore += rollDice;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentscore;
+  } else {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    currentscore = 0;
+    player1.classList.toggle('player--active');
+    player2.classList.toggle('player--active');
   }
 
+  //   if (rollDice !== 1 && activePlayer === 1) {
+  //     currentscore1 += rollDice;
+  //     player1CurrentScore.textContent = currentscore1;
+  //   } else if (rollDice !== 1 && activePlayer === 0) {
+  //     currentscore2 += rollDice;
+  //     player2CurrentScore.textContent = currentscore2;
+  //   }
+
   // Switch player and hold score or dice number is 1
-  if (player1.classList.contains('player--active') && rollDice == 1) {
-    player1.classList.remove('player--active');
-    player2.classList.add('player--active');
-    player1Score.textContent = currentscore1;
-    activePlayer = false;
-  } else if (player2.classList.contains('player--active') && rollDice === 1) {
-    player1.classList.add('player--active');
-    player2.classList.remove('player--active');
-    player2Score.textContent = currentscore2;
-    activePlayer = true;
-  }
+  //   if (player1.classList.contains('player--active') && rollDice == 1) {
+  //     player1.classList.remove('player--active');
+  //     player2.classList.add('player--active');
+  //     player1Score.textContent = currentscore1;
+  //     activePlayer = 0;
+  //   } else if (player2.classList.contains('player--active') && rollDice === 1) {
+  //     player1.classList.add('player--active');
+  //     player2.classList.remove('player--active');
+  //     player2Score.textContent = currentscore2;
+  //     activePlayer = 1;
+  //   }
 });
