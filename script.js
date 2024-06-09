@@ -16,6 +16,7 @@ const dice = document.querySelector('.dice');
 
 let currentscore = 0;
 let activePlayer = 0;
+let score = 0;
 
 // Initialize the game
 player1Score.textContent = 0;
@@ -34,7 +35,8 @@ btnNew.addEventListener('click', function () {
   activePlayer = 0;
   dice.classList.add('hidden');
   player1.classList.add('player--active');
-  player2.classList.remove('player--active');
+  player1.classList.remove('player--winner');
+  player2.classList.remove('player--active', 'player--winner');
 });
 
 // Roll dice random number
@@ -59,25 +61,22 @@ btnRoll.addEventListener('click', function () {
     player1.classList.toggle('player--active');
     player2.classList.toggle('player--active');
   }
+});
 
-  //   if (rollDice !== 1 && activePlayer === 1) {
-  //     currentscore1 += rollDice;
-  //     player1CurrentScore.textContent = currentscore1;
-  //   } else if (rollDice !== 1 && activePlayer === 0) {
-  //     currentscore2 += rollDice;
-  //     player2CurrentScore.textContent = currentscore2;
-  //   }
-
-  // Switch player and hold score or dice number is 1
-  //   if (player1.classList.contains('player--active') && rollDice == 1) {
-  //     player1.classList.remove('player--active');
-  //     player2.classList.add('player--active');
-  //     player1Score.textContent = currentscore1;
-  //     activePlayer = 0;
-  //   } else if (player2.classList.contains('player--active') && rollDice === 1) {
-  //     player1.classList.add('player--active');
-  //     player2.classList.remove('player--active');
-  //     player2Score.textContent = currentscore2;
-  //     activePlayer = 1;
-  //   }
+btnHold.addEventListener('click', function () {
+  score = Number(document.getElementById(`score--${activePlayer}`).textContent);
+  document.getElementById(`score--${activePlayer}`).textContent =
+    currentscore + score;
+  if (
+    Number(document.getElementById(`score--${activePlayer}`).textContent) > 20
+  ) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+  }
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentscore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player1.classList.toggle('player--active');
+  player2.classList.toggle('player--active');
 });
