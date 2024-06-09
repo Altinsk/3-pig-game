@@ -18,6 +18,14 @@ const scores = [0, 0];
 let currentscore = 0;
 let activePlayer = 0;
 
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  currentscore = 0;
+  player1.classList.toggle('player--active');
+  player2.classList.toggle('player--active');
+};
+
 // Initialize the game
 player1Score.textContent = 0;
 player2Score.textContent = 0;
@@ -37,6 +45,8 @@ btnNew.addEventListener('click', function () {
   player1.classList.add('player--active');
   player1.classList.remove('player--winner');
   player2.classList.remove('player--active', 'player--winner');
+  btnHold.classList.remove('hidden');
+  btnRoll.classList.remove('hidden');
 });
 
 // Roll dice random number
@@ -55,11 +65,7 @@ btnRoll.addEventListener('click', function () {
     document.getElementById(`current--${activePlayer}`).textContent =
       currentscore;
   } else {
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentscore = 0;
-    player1.classList.toggle('player--active');
-    player2.classList.toggle('player--active');
+    switchPlayer();
   }
 });
 
@@ -74,10 +80,8 @@ btnHold.addEventListener('click', function () {
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner');
+    btnHold.classList.add('hidden');
+    btnRoll.classList.add('hidden');
   }
-  document.getElementById(`current--${activePlayer}`).textContent = 0;
-  currentscore = 0;
-  activePlayer = activePlayer === 0 ? 1 : 0;
-  player1.classList.toggle('player--active');
-  player2.classList.toggle('player--active');
+  switchPlayer();
 });
