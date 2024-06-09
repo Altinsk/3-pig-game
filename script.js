@@ -51,21 +51,19 @@ btnRoll.addEventListener('click', function () {
   if (rollDice !== 1 && player1.classList.contains('player--active')) {
     currentscore1 += rollDice;
     player1CurrentScore.textContent = currentscore1;
-  } else if (rollDice === 1 && player1.classList.contains('player--active')) {
-    player1Score.textContent = currentscore1;
   } else if (rollDice !== 1 && player2.classList.contains('player--active')) {
     currentscore2 += rollDice;
     player2CurrentScore.textContent = currentscore2;
-  } else if (rollDice === 1 && player2.classList.contains('player--active')) {
-    player2Score.textContent = currentscore2;
   }
 
   // Switch player and hold score or dice number is 1
   if (player1.classList.contains('player--active') && rollDice == 1) {
     player1.classList.remove('player--active');
     player2.classList.add('player--active');
+    player1Score.textContent = currentscore1;
   } else if (player2.classList.contains('player--active') && rollDice === 1) {
     player1.classList.add('player--active');
     player2.classList.remove('player--active');
+    player2Score.textContent = currentscore2;
   }
 });
